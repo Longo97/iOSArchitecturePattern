@@ -1,13 +1,11 @@
 import UIKit
 
-class AddListViewController: UIViewController {
+class AddListViewController: UIViewController, AddListViewDelegate {
 
     private var addListView = AddListView()
-    private var tasksListService: TasksListServiceProtocol!
     
-    init(tasksListService: TasksListServiceProtocol) {
+    init() {
         super.init(nibName: nil, bundle: nil)
-        self.tasksListService = tasksListService
     }
     
     required init?(coder: NSCoder) {
@@ -17,28 +15,19 @@ class AddListViewController: UIViewController {
 
     override func loadView() {
         super.loadView()
-        navigationController?.navigationBar.isHidden = true
-        view.backgroundColor = .white
         setupAddListView()
     }
     
     private func setupAddListView() {
+        let presenter = AddListPresenter(addListView: addListView, tasksListService: TasksListService())
         addListView.delegate = self
+        addListView.presenter = presenter
         self.view = addListView
     }
     
     
-    private func backToHome() {
+    internal func backToHome() {
         navigationController?.popViewController(animated: true)
-    }
-}
-
-
-extension AddListViewController: AddListViewDelegate {
-    
-    func addList(_ list: TaskListModel) {
-        tasksListService.saveTasksList(list)
-        backToHome()
     }
 }
 

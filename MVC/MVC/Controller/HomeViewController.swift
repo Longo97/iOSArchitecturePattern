@@ -1,19 +1,12 @@
 import UIKit
 import CoreData
 
-/// Keeps references to both the HomeView and the model (The two service protocols)
 class HomeViewController: UIViewController {
     
     private var homeView = HomeView()
     
-    /// Passing instances of the classes via initializer allows great decoupling (Dependecy Injection)
-    private var tasksListService: TasksListServiceProtocol!
-    private var taskService: TaskServiceProtocol!
-
-    init(tasksListService: TasksListServiceProtocol, taskService: TaskServiceProtocol) {
+    init() {
         super.init(nibName: nil, bundle: nil)
-        self.tasksListService = tasksListService
-        self.taskService = taskService
     }
     
     required init?(coder: NSCoder) {
@@ -25,51 +18,24 @@ class HomeViewController: UIViewController {
         setupHomeView()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        /// Implementation of the Model Observer
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(contextObjectsDidChange),
-                                               name: NSNotification.Name.NSManagedObjectContextObjectsDidChange,
-                                               object: CoreDataManager.shared.mainContext)
-    }
 
     private func setupHomeView() {
-        /// Setup the ViewController as implementation of the delegate
+        let presenter = HomePresenter(homeView: homeView, tasksListService: TasksListService())
         homeView.delegate = self
-        fetchTasksLists()
+        homeView.presenter = presenter
+        homeView.setupView()
         self.view = homeView
     }
 }
 
-extension HomeViewController {
+extension HomeViewController: HomeViewControllerDelegate {
     
-    /// Pass the information to the View for display
-    func fetchTasksLists() {
-        let lists = tasksListService.fetchLists()
-        homeView.setTasksLists(lists)
+    func addList(){
+        navigationController?.pushViewController(AddListViewController(), animated: true)
     }
     
-    @objc func contextObjectsDidChange() {
-        fetchTasksLists()
-    }
-}
-
-
-/// Implementation of the Delegate
-extension HomeViewController: HomeViewDelegate {
-    
-    func addListAction() {
-        let addListViewController = AddListViewController(tasksListService: tasksListService)
-        navigationController?.pushViewController(addListViewController, animated: true)
-    }
-    
-    func selectedList(_ list: TaskListModel) {
-        let taskViewController = TaskListViewController(tasksListModel: list, taskService: taskService, tasksListService: tasksListService)
+    func selectedList(_ list: TaskListModel){
+        let taskViewController = TaskListViewController(tasksListModel: list)
         navigationController?.pushViewController(taskViewController, animated: true)
-    }
-    
-    func deleteList(_ list: TaskListModel) {
-        tasksListService.deleteList(list.id ?? "")
     }
 }

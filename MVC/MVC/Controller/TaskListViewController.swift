@@ -4,16 +4,10 @@ class TaskListViewController: UIViewController {
     
     private var taskListView = TaskListView()
     private var tasksListModel: TaskListModel!
-    private var taskService: TaskServiceProtocol!
-    private var tasksListService: TasksListServiceProtocol!
 
-    init(tasksListModel: TaskListModel,
-         taskService: TaskServiceProtocol,
-         tasksListService: TasksListServiceProtocol) {
-        super.init(nibName: nil, bundle: nil)
+    init(tasksListModel: TaskListModel) {
         self.tasksListModel = tasksListModel
-        self.taskService = taskService
-        self.tasksListService = tasksListService
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -22,52 +16,28 @@ class TaskListViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
-        navigationController?.navigationBar.isHidden = true
         setupTaskListView()
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(contextObjectsDidChange),
-                                               name: NSNotification.Name.NSManagedObjectContextObjectsDidChange,
-                                               object: CoreDataManager.shared.mainContext)
-        taskListView.setTasksList(tasksListModel)
-    }
-
     
     private func setupTaskListView() {
+        let presenter = TasksListPresenter(taskListView: taskListView,
+                                           tasksListModel: tasksListModel,
+                                           taskService: TaskService(),
+                                           tasksListService: TasksListService())
         taskListView.delegate = self
+        taskListView.presenter = presenter
+        taskListView.setupView()
         self.view = taskListView
-    }
-    
-    
-    private func updateTasksList() {
-        guard let list = tasksListService.fetchListWithId(tasksListModel.id ?? "") else { return }
-        tasksListModel = list
-        taskListView.setTasksList(tasksListModel)
-    }
-    
-    @objc func contextObjectsDidChange() {
-        updateTasksList()
     }
 }
 
 
-extension TaskListViewController: TaskListViewDelegate {
+extension TaskListViewController: TaskListViewControllerDelegate {
     
-    func addTaskAction() {
-        let addTaskViewController = AddTaskViewController(tasksListModel: tasksListModel, taskService: taskService)
+    func addTask() {
+        let addTaskViewController = AddTaskViewController(tasksListModel: tasksListModel)
         addTaskViewController.modalPresentationStyle = .pageSheet
         present(addTaskViewController, animated: true)
-    }
-    
-    func updateTask(_ task: TaskModel) {
-        taskService.updateTask(task)
-    }
-    
-    func deleteTask(_ task: TaskModel) {
-        taskService.deleteTask(task)
     }
 }
 

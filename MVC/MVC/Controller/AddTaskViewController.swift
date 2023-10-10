@@ -4,13 +4,10 @@ class AddTaskViewController: UIViewController {
 
     private var addTaskView = AddTaskView()
     private var tasksListModel: TaskListModel!
-    private var taskService: TaskServiceProtocol!
         
-    init(tasksListModel: TaskListModel,
-         taskService: TaskServiceProtocol) {
+    init(tasksListModel: TaskListModel) {
         super.init(nibName: nil, bundle: nil)
         self.tasksListModel = tasksListModel
-        self.taskService = taskService
     }
     
     required init?(coder: NSCoder) {
@@ -19,21 +16,22 @@ class AddTaskViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
-        navigationController?.navigationBar.isHidden = true
-        view.backgroundColor = .white
         setupAddTaskView()
     }
     
     private func setupAddTaskView() {
+        let presenter = AddTaskPresenter(addTaskView: addTaskView,
+                                         tasksListModel: tasksListModel,
+                                         taskService: TaskService())
         addTaskView.delegate = self
+        addTaskView.presenter = presenter
         self.view = addTaskView
     }
 }
 
-extension AddTaskViewController: AddTaskViewDelegate {
+extension AddTaskViewController: AddedTaskViewControllerDelegate {
     
-    func addTask(_ task: TaskModel) {
-        taskService.saveTask(task, in: tasksListModel)
+    func addedTask() {
         dismiss(animated: true)
     }
 }
