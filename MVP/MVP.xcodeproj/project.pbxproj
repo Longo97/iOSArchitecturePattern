@@ -12,7 +12,6 @@
 		8260659C2AD4419C007869C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8260659B2AD4419C007869C0 /* ViewController.swift */; };
 		826065A12AD4419E007869C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 826065A02AD4419E007869C0 /* Assets.xcassets */; };
 		826065A42AD4419E007869C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 826065A22AD4419E007869C0 /* LaunchScreen.storyboard */; };
-		826065AF2AD4419F007869C0 /* MVPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826065AE2AD4419F007869C0 /* MVPTests.swift */; };
 		826065B92AD4419F007869C0 /* MVPUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826065B82AD4419F007869C0 /* MVPUITests.swift */; };
 		826065BB2AD4419F007869C0 /* MVPUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826065BA2AD4419F007869C0 /* MVPUITestsLaunchTests.swift */; };
 		826066192AD5242E007869C0 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826066072AD5242E007869C0 /* UIColor+Extensions.swift */; };
@@ -52,6 +51,17 @@
 		826066572AD52540007869C0 /* AddListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826066562AD52540007869C0 /* AddListPresenter.swift */; };
 		826066592AD5254A007869C0 /* TasksListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826066582AD5254A007869C0 /* TasksListPresenter.swift */; };
 		8260665B2AD52554007869C0 /* AddTaskPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8260665A2AD52554007869C0 /* AddTaskPresenter.swift */; };
+		8260665E2AD531B8007869C0 /* AddListViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8260665D2AD531B8007869C0 /* AddListViewControllerTest.swift */; };
+		826066642AD53206007869C0 /* MockTaskListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826066602AD53206007869C0 /* MockTaskListService.swift */; };
+		826066652AD53206007869C0 /* MockTaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826066612AD53206007869C0 /* MockTaskService.swift */; };
+		826066662AD53206007869C0 /* MockNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826066622AD53206007869C0 /* MockNavigationController.swift */; };
+		826066672AD53206007869C0 /* InMemoryCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826066632AD53206007869C0 /* InMemoryCoreDataManager.swift */; };
+		826066692AD532C9007869C0 /* AddListViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826066682AD532C9007869C0 /* AddListViewTest.swift */; };
+		826066712AD533EF007869C0 /* AddTaskPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8260666A2AD533EF007869C0 /* AddTaskPresenterTest.swift */; };
+		826066732AD533EF007869C0 /* HomePresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8260666C2AD533EF007869C0 /* HomePresenterTest.swift */; };
+		826066742AD533EF007869C0 /* HomeViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8260666D2AD533EF007869C0 /* HomeViewTest.swift */; };
+		826066762AD533EF007869C0 /* HomeViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8260666F2AD533EF007869C0 /* HomeViewControllerTest.swift */; };
+		826066772AD533EF007869C0 /* AddTaskViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826066702AD533EF007869C0 /* AddTaskViewTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,7 +90,6 @@
 		826065A32AD4419E007869C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		826065A52AD4419E007869C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		826065AA2AD4419F007869C0 /* MVPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MVPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		826065AE2AD4419F007869C0 /* MVPTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MVPTests.swift; sourceTree = "<group>"; };
 		826065B42AD4419F007869C0 /* MVPUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MVPUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		826065B82AD4419F007869C0 /* MVPUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MVPUITests.swift; sourceTree = "<group>"; };
 		826065BA2AD4419F007869C0 /* MVPUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MVPUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -121,6 +130,18 @@
 		826066562AD52540007869C0 /* AddListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddListPresenter.swift; sourceTree = "<group>"; };
 		826066582AD5254A007869C0 /* TasksListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksListPresenter.swift; sourceTree = "<group>"; };
 		8260665A2AD52554007869C0 /* AddTaskPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskPresenter.swift; sourceTree = "<group>"; };
+		8260665C2AD531B8007869C0 /* MVPTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MVPTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		8260665D2AD531B8007869C0 /* AddListViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddListViewControllerTest.swift; sourceTree = "<group>"; };
+		826066602AD53206007869C0 /* MockTaskListService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockTaskListService.swift; sourceTree = "<group>"; };
+		826066612AD53206007869C0 /* MockTaskService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockTaskService.swift; sourceTree = "<group>"; };
+		826066622AD53206007869C0 /* MockNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockNavigationController.swift; sourceTree = "<group>"; };
+		826066632AD53206007869C0 /* InMemoryCoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InMemoryCoreDataManager.swift; sourceTree = "<group>"; };
+		826066682AD532C9007869C0 /* AddListViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddListViewTest.swift; sourceTree = "<group>"; };
+		8260666A2AD533EF007869C0 /* AddTaskPresenterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTaskPresenterTest.swift; sourceTree = "<group>"; };
+		8260666C2AD533EF007869C0 /* HomePresenterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePresenterTest.swift; sourceTree = "<group>"; };
+		8260666D2AD533EF007869C0 /* HomeViewTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewTest.swift; sourceTree = "<group>"; };
+		8260666F2AD533EF007869C0 /* HomeViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewControllerTest.swift; sourceTree = "<group>"; };
+		826066702AD533EF007869C0 /* AddTaskViewTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTaskViewTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,7 +209,15 @@
 		826065AD2AD4419F007869C0 /* MVPTests */ = {
 			isa = PBXGroup;
 			children = (
-				826065AE2AD4419F007869C0 /* MVPTests.swift */,
+				8260665F2AD53206007869C0 /* Mock */,
+				8260665D2AD531B8007869C0 /* AddListViewControllerTest.swift */,
+				8260666A2AD533EF007869C0 /* AddTaskPresenterTest.swift */,
+				826066702AD533EF007869C0 /* AddTaskViewTest.swift */,
+				8260666C2AD533EF007869C0 /* HomePresenterTest.swift */,
+				8260666F2AD533EF007869C0 /* HomeViewControllerTest.swift */,
+				8260666D2AD533EF007869C0 /* HomeViewTest.swift */,
+				8260665C2AD531B8007869C0 /* MVPTests-Bridging-Header.h */,
+				826066682AD532C9007869C0 /* AddListViewTest.swift */,
 			);
 			path = MVPTests;
 			sourceTree = "<group>";
@@ -358,6 +387,18 @@
 			path = ../../../MVC/MVC/View/Buttons;
 			sourceTree = "<group>";
 		};
+		8260665F2AD53206007869C0 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				826066602AD53206007869C0 /* MockTaskListService.swift */,
+				826066612AD53206007869C0 /* MockTaskService.swift */,
+				826066622AD53206007869C0 /* MockNavigationController.swift */,
+				826066632AD53206007869C0 /* InMemoryCoreDataManager.swift */,
+			);
+			name = Mock;
+			path = ../../MVC/MVCTests/Mock;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -429,6 +470,7 @@
 					};
 					826065A92AD4419F007869C0 = {
 						CreatedOnToolsVersion = 15.0;
+						LastSwiftMigration = 1500;
 						TestTargetID = 826065932AD4419C007869C0;
 					};
 					826065B32AD4419F007869C0 = {
@@ -535,7 +577,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				826065AF2AD4419F007869C0 /* MVPTests.swift in Sources */,
+				826066642AD53206007869C0 /* MockTaskListService.swift in Sources */,
+				826066772AD533EF007869C0 /* AddTaskViewTest.swift in Sources */,
+				826066672AD53206007869C0 /* InMemoryCoreDataManager.swift in Sources */,
+				826066732AD533EF007869C0 /* HomePresenterTest.swift in Sources */,
+				826066652AD53206007869C0 /* MockTaskService.swift in Sources */,
+				826066712AD533EF007869C0 /* AddTaskPresenterTest.swift in Sources */,
+				826066762AD533EF007869C0 /* HomeViewControllerTest.swift in Sources */,
+				8260665E2AD531B8007869C0 /* AddListViewControllerTest.swift in Sources */,
+				826066692AD532C9007869C0 /* AddListViewTest.swift in Sources */,
+				826066662AD53206007869C0 /* MockNavigationController.swift in Sources */,
+				826066742AD533EF007869C0 /* HomeViewTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -753,6 +805,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = APP5WTLNUY;
@@ -762,6 +815,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = marco.MVPTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "MVPTests/MVPTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MVP.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MVP";
@@ -773,6 +828,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = APP5WTLNUY;
@@ -782,6 +838,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = marco.MVPTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "MVPTests/MVPTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MVP.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MVP";

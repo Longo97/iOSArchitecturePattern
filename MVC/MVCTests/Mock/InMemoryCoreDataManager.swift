@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-@testable import MVC
+@testable import MVP
 
 /// Has same functionalities as app's CoreDataManager, but the database in generated in memory and does not persist when the tests are finished
 class InMemoryCoreDataManager: CoreDataManager {

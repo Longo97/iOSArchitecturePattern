@@ -9,10 +9,10 @@ import Foundation
 
 class HomePresenter{
     private weak var homeView: HomeViewDelegate?
-    private var tasksListService: TasksListService!
+    private var tasksListService: TasksListServiceProtocol!
     private var lists: [TaskListModel] = [TaskListModel]()
     
-    init(homeView: HomeViewDelegate? = nil, tasksListService: TasksListService) {
+    init(homeView: HomeViewDelegate? = nil, tasksListService: TasksListServiceProtocol) {
         self.homeView = homeView
         self.tasksListService = tasksListService
         

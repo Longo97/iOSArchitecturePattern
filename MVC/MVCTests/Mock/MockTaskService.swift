@@ -6,7 +6,7 @@
 //
 
 import Foundation
-@testable import MVC
+@testable import MVP
 
 class MockTaskService: TaskServiceProtocol {
     private var list: TaskListModel!

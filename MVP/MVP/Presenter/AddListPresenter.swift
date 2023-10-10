@@ -9,10 +9,10 @@ import Foundation
 
 class AddListPresenter {
     private weak var addListView: AddListViewDelegate?
-    private var tasksListService: TasksListService!
-    private var list: TaskListModel!
+    private var tasksListService: TasksListServiceProtocol!
+    var list: TaskListModel!
     
-    init(addListView: AddListViewDelegate? = nil, tasksListService: TasksListService) {
+    init(addListView: AddListViewDelegate? = nil, tasksListService: TasksListServiceProtocol) {
         self.addListView = addListView
         self.tasksListService = tasksListService
         self.list = TaskListModel(id: ProcessInfo().globallyUniqueString, icon: "checkmark.seal.fill", createdAt: Date())
