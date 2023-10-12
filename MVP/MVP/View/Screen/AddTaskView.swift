@@ -1,7 +1,11 @@
 import UIKit
 
+protocol AddedTaskViewControllerDelegate: AnyObject {
+    func addedTask()
+}
+
 protocol AddTaskViewDelegate: AnyObject {
-    func addTask(_ task: TaskModel)
+    func addedTask()
 }
 
 class AddTaskView: UIView {
@@ -14,9 +18,9 @@ class AddTaskView: UIView {
     private(set) var iconSelectorView = IconSelectorView(frame: .zero, iconColor: .mainCoralColor)
     private(set) var addTaskButton = MainButton(title: "Add Task", color: .mainCoralColor)
     
-    private(set) var taskModel = TaskModel()
-    
-    weak var delegate: AddTaskViewDelegate?
+    var presenter: AddTaskPresenter!
+        
+    weak var delegate: AddedTaskViewControllerDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -108,13 +112,7 @@ extension AddTaskView {
     
     @objc func addTaskAction() {
         guard titleTextfield.hasText else { return }
-        
-        taskModel.title = titleTextfield.text
-        taskModel.icon = taskModel.icon ?? "checkmark.seal.fill"
-        taskModel.done = false
-        taskModel.id = ProcessInfo().globallyUniqueString
-        taskModel.createdAt = Date()
-        delegate?.addTask(taskModel)
+        presenter.addTaskWithTitle(titleTextfield.text!)
     }
     
     func configureCollectionView() {
@@ -134,6 +132,13 @@ extension AddTaskView {
 extension AddTaskView: IconSelectorViewDelegate {
     
     func selectedIcon(_ icon: String) {
-        taskModel.icon = icon
+        presenter.setTaskIcon(icon)
+    }
+}
+
+extension AddTaskView: AddTaskViewDelegate {
+    
+    func addedTask() {
+        delegate?.addedTask()
     }
 }

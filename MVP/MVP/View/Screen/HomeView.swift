@@ -1,10 +1,13 @@
 import UIKit
 
 /// The protocol define the actions that the controller will receive
-protocol HomeViewDelegate: AnyObject {
-    func addListAction()
+protocol HomeViewControllerDelegate: AnyObject {
+    func addList()
     func selectedList(_ list: TaskListModel)
-    func deleteList(_ list: TaskListModel)
+}
+
+protocol HomeViewDelegate: AnyObject {
+    func reloadData()
 }
 
 class HomeView: UIView {
@@ -13,10 +16,11 @@ class HomeView: UIView {
     private(set) var tableView = UITableView(frame: .zero, style: .grouped)
     private(set) var addListButton = MainButton(title: "Add List", color: .mainBlueColor)
     private(set) var emptyState = EmptyStateView(frame: .zero, title: "Press 'Add List' to start")
-    private(set) var tasksList = [TaskListModel]()
+    
+    var presenter: HomePresenter!
     
     /// This delegate is used to pass user interactions to the controller
-    weak var delegate: HomeViewDelegate?
+    weak var delegate: HomeViewControllerDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,14 +35,12 @@ class HomeView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setTasksLists(_ lists: [TaskListModel]) {
-        tasksList = lists
-        tableView.reloadData()
-        emptyState.isHidden = tasksList.count > 0
+    func setupView() {
+        presenter.fetchTasksLists()
     }
 }
 
-extension HomeView {
+private extension HomeView {
     
     func configurePageTitleLabel() {
         addSubview(pageTitle)
@@ -63,7 +65,7 @@ extension HomeView {
     }
     
     @objc func addListAction() {
-        delegate?.addListAction()
+        delegate?.addList()
     }
 
     func configureTableView() {
@@ -105,7 +107,7 @@ extension HomeView: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.selectedList(tasksList[indexPath.row])
+        delegate?.selectedList(presenter.listAtIndex(indexPath.row))
     }
 }
 
@@ -117,21 +119,26 @@ extension HomeView: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tasksList.count
+        return presenter.numberOfTaskLists
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ToDoListCell.reuseId, for: indexPath) as! ToDoListCell
-        cell.setCellParametersForList(tasksList[indexPath.row])
+        cell.setCellParametersForList(presenter.listAtIndex(indexPath.row))
         return cell
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let list = tasksList[indexPath.row]
-            tasksList.remove(at: indexPath.row)
+            presenter.removeListAtIndex(indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
-            delegate?.deleteList(list)
         }
+    }
+}
+
+extension HomeView: HomeViewDelegate{
+    func reloadData() {
+        tableView.reloadData()
+        emptyState.isHidden = presenter.numberOfTaskLists > 0
     }
 }

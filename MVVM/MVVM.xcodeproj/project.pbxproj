@@ -97,6 +97,9 @@
 		826066832AD6F4A3007869C0 /* MVVM */ = {
 			isa = PBXGroup;
 			children = (
+				826066B62AD7E61F007869C0 /* ViewModel */,
+				826066B52AD7E619007869C0 /* View */,
+				826066B42AD7E60F007869C0 /* Model */,
 				826066842AD6F4A3007869C0 /* AppDelegate.swift */,
 				826066862AD6F4A3007869C0 /* SceneDelegate.swift */,
 				826066882AD6F4A3007869C0 /* ViewController.swift */,
@@ -122,6 +125,27 @@
 				826066A72AD6F4A5007869C0 /* MVVMUITestsLaunchTests.swift */,
 			);
 			path = MVVMUITests;
+			sourceTree = "<group>";
+		};
+		826066B42AD7E60F007869C0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		826066B52AD7E619007869C0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		826066B62AD7E61F007869C0 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

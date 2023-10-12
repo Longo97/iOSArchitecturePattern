@@ -1,32 +1,33 @@
 import UIKit
 
-protocol AddTaskViewDelegate: AnyObject {
-    func addTask(_ task: TaskModel)
+protocol AddListViewDelegate: AnyObject {
+    func backToHome()
 }
 
-class AddTaskView: UIView {
+class AddListView: UIView {
     
-    private(set) var backButton = BackButton()
-    private(set) var pageTitle = PageLabel(title: "Add Task")
-    private(set) var titleLabel = UILabel(frame: .zero)
+    private(set) var backButton = BackButton(frame: .zero)
+    private(set) var pageTitle = PageLabel(title: "Add List")
+    private(set) var titleLabel = FieldLabel(title: "Title")
     private(set) var titleTextfield = UITextField()
-    private(set) var iconLabel = UILabel(frame: .zero)
-    private(set) var iconSelectorView = IconSelectorView(frame: .zero, iconColor: .mainCoralColor)
-    private(set) var addTaskButton = MainButton(title: "Add Task", color: .mainCoralColor)
+    private(set) var iconLabel = FieldLabel(title: "Icon")
+    private(set) var iconSelectorView = IconSelectorView(frame: .zero, iconColor: .mainBlueColor)
+    private(set) var addListButton = MainButton(title: "Add List", color: .mainBlueColor)
     
-    private(set) var taskModel = TaskModel()
+    var presenter: AddListPresenter!
     
-    weak var delegate: AddTaskViewDelegate?
+    weak var delegate: (AddListViewDelegate & BackButtonDelegate)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
         
+        configureBackButton()
         configurePageTitleLabel()
         configureTitleLabel()
         configureTitleTextfield()
         configureIconLabel()
-        configureAddTaskButton()
+        configureAddListButton()
         configureCollectionView()
     }
     
@@ -35,29 +36,42 @@ class AddTaskView: UIView {
     }
 }
 
-extension AddTaskView {
-
+extension AddListView {
+    
+    func configureBackButton() {
+        backButton.addTarget(self, action: #selector(backAction), for: .touchUpInside)
+        addSubview(backButton)
+        
+        NSLayoutConstraint.activate([
+            backButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            backButton.topAnchor.constraint(equalTo: topAnchor, constant: 60),
+            backButton.heightAnchor.constraint(equalToConstant: 40),
+            backButton.widthAnchor.constraint(equalToConstant: 40),
+        ])
+    }
+    
+    @objc func backAction() {
+        delegate?.navigateBack()
+    }
+    
     func configurePageTitleLabel() {
         addSubview(pageTitle)
         
         NSLayoutConstraint.activate([
-            pageTitle.centerXAnchor.constraint(equalTo: centerXAnchor),
+            pageTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 60),
+            pageTitle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -60),
             pageTitle.topAnchor.constraint(equalTo: topAnchor, constant: 60),
             pageTitle.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     
     func configureTitleLabel() {
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.text = "Title"
-        titleLabel.font = .systemFont(ofSize: 21, weight: .light)
-        titleLabel.textColor = .grayTextColor
         addSubview(titleLabel)
         
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 100),
+            titleLabel.topAnchor.constraint(equalTo: pageTitle.bottomAnchor, constant: 20),
             titleLabel.heightAnchor.constraint(equalToConstant: 26)
         ])
     }
@@ -66,7 +80,7 @@ extension AddTaskView {
         titleTextfield.translatesAutoresizingMaskIntoConstraints = false
         titleTextfield.textColor = .grayTextColor
         titleTextfield.attributedPlaceholder = NSAttributedString(
-            string: "Add task",
+            string: "Add list title",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.grayBackgroundColor]
         )
         addSubview(titleTextfield)
@@ -80,10 +94,6 @@ extension AddTaskView {
     }
     
     func configureIconLabel() {
-        iconLabel.translatesAutoresizingMaskIntoConstraints = false
-        iconLabel.text = "Icon"
-        iconLabel.font = .systemFont(ofSize: 21, weight: .light)
-        iconLabel.textColor = .grayTextColor
         addSubview(iconLabel)
         
         NSLayoutConstraint.activate([
@@ -94,27 +104,22 @@ extension AddTaskView {
         ])
     }
     
-    func configureAddTaskButton() {
-        addTaskButton.addTarget(self, action: #selector(addTaskAction), for: .touchUpInside)
-        addSubview(addTaskButton)
+    func configureAddListButton() {
+        addListButton.addTarget(self, action: #selector(addListAction), for: .touchUpInside)
+        addSubview(addListButton)
         
         NSLayoutConstraint.activate([
-            addTaskButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            addTaskButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
-            addTaskButton.widthAnchor.constraint(equalToConstant: 150),
-            addTaskButton.heightAnchor.constraint(equalToConstant: 60)
+            addListButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            addListButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
+            addListButton.widthAnchor.constraint(equalToConstant: 150),
+            addListButton.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
     
-    @objc func addTaskAction() {
+    @objc func addListAction() {
         guard titleTextfield.hasText else { return }
         
-        taskModel.title = titleTextfield.text
-        taskModel.icon = taskModel.icon ?? "checkmark.seal.fill"
-        taskModel.done = false
-        taskModel.id = ProcessInfo().globallyUniqueString
-        taskModel.createdAt = Date()
-        delegate?.addTask(taskModel)
+        presenter.addListWithTitle(titleTextfield.text ?? "")
     }
     
     func configureCollectionView() {
@@ -126,14 +131,20 @@ extension AddTaskView {
             iconSelectorView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             iconSelectorView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             iconSelectorView.topAnchor.constraint(equalTo: iconLabel.bottomAnchor, constant: 10),
-            iconSelectorView.bottomAnchor.constraint(equalTo: addTaskButton.topAnchor, constant: -20)
+            iconSelectorView.bottomAnchor.constraint(equalTo: addListButton.topAnchor, constant: -20)
         ])
     }
 }
 
-extension AddTaskView: IconSelectorViewDelegate {
+extension AddListView: IconSelectorViewDelegate {
     
     func selectedIcon(_ icon: String) {
-        taskModel.icon = icon
+        presenter.setIconList(icon)
+    }
+}
+
+extension AddListView: AddListViewDelegate{
+    func backToHome() {
+        delegate?.navigateBack()
     }
 }
